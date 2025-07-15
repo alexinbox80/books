@@ -3,7 +3,9 @@
 namespace App\Domain\Service;
 
 use App\Domain\Entity\Book;
+use App\Domain\Model\BookModel;
 use App\Domain\Model\CreateBookModel;
+use App\Domain\Model\UpdateBookModel;
 use App\Infrastructure\Repository\AuthorRepository;
 use App\Infrastructure\Repository\BookRepository;
 
@@ -43,11 +45,20 @@ class BookService
     }
 
     /**
-     * @return Book[]
+     * @return BookModel[]
      */
     public function getBooksPaginated(int $page, int $perPage): array
     {
-        return $this->bookRepository->getBooksPaginated($page, $perPage);
+        return array_map(
+            static fn (Book $book): BookModel => new BookModel(
+                $book->getId(),
+                $book->getAuthor()->getId(),
+                $book->getTitle(),
+                $book->getDescription(),
+                $book->getCreatedAt(),
+            ),
+            $this->bookRepository->getBooksPaginated($page, $perPage)
+        );
     }
 
     /**
@@ -101,22 +112,22 @@ class BookService
         return $book;
     }
 
-//    /**
-//     * @param Book $book
-//     * @param UpdateBookModel $updateBookModel
-//     * @return Book
-//     */
-//    public function update(Book $book, UpdateBookModel $updateBookModel): Book
-//    {
-//        $book->changeFields(
-//            $updateBookModel->title,
-//            $updateBookModel->description,
-//        );
-//
-//        $this->bookRepository->update();
-//
-//        return $book;
-//    }
+    /**
+     * @param Book $book
+     * @param UpdateBookModel $updateBookModel
+     * @return Book
+     */
+    public function update(Book $book, UpdateBookModel $updateBookModel): Book
+    {
+        $book->changeFields(
+            $updateBookModel->title,
+            $updateBookModel->description,
+        );
+
+        $this->bookRepository->update();
+
+        return $book;
+    }
 
     /**
      * @param int $bookId

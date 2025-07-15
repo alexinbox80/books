@@ -4,7 +4,7 @@ namespace App\Domain\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CreateBookModel
+class UpdateBookModel
 {
     public function __construct(
         #[Assert\Type('integer')]

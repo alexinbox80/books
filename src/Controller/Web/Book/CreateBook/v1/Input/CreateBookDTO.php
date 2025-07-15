@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domain\Model;
+namespace App\Controller\Web\Book\CreateBook\v1\Input;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CreateBookModel
+class CreateBookDTO
 {
     public function __construct(
         #[Assert\Type('integer')]

@@ -22,7 +22,8 @@ class Manager
         $createAuthorModel = $this->modelFactory->makeModel(
             CreateAuthorModel::class,
             $createAuthorDTO->firstName,
-            $createAuthorDTO->lastName, $createAuthorDTO->description
+            $createAuthorDTO->lastName,
+            $createAuthorDTO->description
         );
 
         $author = $this->authorService->create($createAuthorModel);

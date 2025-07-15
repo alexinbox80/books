@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Web\Author\DeleteAuthor\v1;
+namespace App\Controller\Web\Book\DeleteBook\v1;
 
-use App\Domain\Entity\Author;
+use App\Domain\Entity\Book;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,13 +21,13 @@ class Controller
      * @throws InvalidArgumentException
      */
     #[Route(
-        path: 'api/v1/author/{id}',
-        name: 'web_delete_author_by_id_v1_invoke',
+        path: 'api/v1/book/{id}',
+        name: 'web_delete_book_by_id_v1_invoke',
         requirements: ['id' => '\d+'],
         methods: ['DELETE']
     )]
-    public function __invoke(#[MapEntity(id: 'id')] Author $author): JsonResponse
+    public function __invoke(#[MapEntity(id: 'id')] Book $book): JsonResponse
     {
-        return new JsonResponse(['author' => $this->manager->deleteAuthor($author)]);
+        return new JsonResponse(['book' => $this->manager->deleteBook($book)]);
     }
 }

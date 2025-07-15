@@ -3,7 +3,6 @@
 namespace App\Controller\Web\Author\CreateAuthor\v1;
 
 use App\Controller\Web\Author\CreateAuthor\v1\Input\CreateAuthorDTO;
-
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
