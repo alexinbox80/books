@@ -60,4 +60,15 @@ class Book implements EntityInterface, HasMetaTimestampsInterface
     {
         return $this->author;
     }
+
+    public function changeFields(
+        string $title,
+        ?string $description = null,
+    ): void
+    {
+        self::titleValidate($title);
+
+        $this->title = $title;
+        $this->description = $description;
+    }
 }

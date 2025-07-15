@@ -72,4 +72,18 @@ class Author implements EntityInterface, HasMetaTimestampsInterface
         WebmozartAssert::alpha($firstName, 'First name should be in alphabet. Got: %s');
         WebmozartAssert::lengthBetween($firstName, 2, 64, 'The first name must be a string valid length of 2-64 letters. Got: %s');
     }
+
+    public function changeFields(
+        string $lastName,
+        string $firstName,
+        ?string $description = null
+    ): void
+    {
+        self::lastNameValidate($lastName);
+        self::firstNameValidate($firstName);
+
+        $this->lastName = $lastName;
+        $this->firstName = $firstName;
+        $this->description = $description;
+    }
 }
