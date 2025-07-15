@@ -73,6 +73,21 @@ class Author implements EntityInterface, HasMetaTimestampsInterface
         WebmozartAssert::lengthBetween($firstName, 2, 64, 'The first name must be a string valid length of 2-64 letters. Got: %s');
     }
 
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
     public function changeFields(
         string $lastName,
         string $firstName,

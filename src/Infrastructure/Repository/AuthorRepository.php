@@ -9,7 +9,7 @@ class AuthorRepository extends AbstractRepository
     /**
      * @return Author[]
      */
-    public function getAuthors(int $page, int $perPage): array
+    public function getAuthorsPaginated(int $page, int $perPage): array
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
         $queryBuilder->select('a')

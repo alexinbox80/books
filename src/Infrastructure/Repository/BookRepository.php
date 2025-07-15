@@ -9,7 +9,7 @@ class BookRepository extends AbstractRepository
     /**
      * @return Book[]
      */
-    public function getBooks(int $page, int $perPage): array
+    public function getBooksPaginated(int $page, int $perPage): array
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
         $queryBuilder->select('b')

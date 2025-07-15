@@ -56,6 +56,16 @@ class Book implements EntityInterface, HasMetaTimestampsInterface
         WebmozartAssert::lengthBetween($title, 2, 64, 'Title must be a string valid length of 2-64 letters. Got: %s');
     }
 
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
     public function getAuthor(): Author
     {
         return $this->author;
