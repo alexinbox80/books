@@ -33,10 +33,11 @@ class Book implements EntityInterface, HasMetaTimestampsInterface
     #[ORM\Column(name: 'description', type: 'string', length: 1024, nullable: true)]
     private ?string $description = null;
 
-    public function __construct(string $title, ?string $description = null)
+    public function __construct(Author $author, string $title, ?string $description = null)
     {
         self::titleValidate($title);
 
+        $this->author = $author;
         $this->title = $title;
         $this->description = $description;
     }
@@ -52,7 +53,7 @@ class Book implements EntityInterface, HasMetaTimestampsInterface
     {
         WebmozartAssert::stringNotEmpty($title, 'Title should not be empty. Got: %s');
         //Assert::regexp()
-        WebmozartAssert::alpha($title, 'Title should be in alphabet. Got: %s');
+        //WebmozartAssert::alpha($title, 'Title should be in alphabet. Got: %s');
         WebmozartAssert::lengthBetween($title, 2, 64, 'Title must be a string valid length of 2-64 letters. Got: %s');
     }
 

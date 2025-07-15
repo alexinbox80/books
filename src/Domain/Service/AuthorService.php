@@ -3,6 +3,7 @@
 namespace App\Domain\Service;
 
 use App\Domain\Entity\Author;
+use App\Domain\Model\CreateAuthorModel;
 use App\Infrastructure\Repository\AuthorRepository;
 
 class AuthorService
@@ -105,22 +106,22 @@ class AuthorService
         return $author;
     }
 
-//    /**
-//     * @param CreateAuthorModel $createAuthorModel
-//     * @return Author
-//     */
-//    public function create(CreateAuthorModel $createAuthorModel): Author
-//    {
-//        $author = new Author(
-//            $createAuthorModel->firstName,
-//            $createAuthorModel->lastName,
-//            $createAuthorModel->description
-//        );
-//
-//        $this->authorRepository->create($author);
-//
-//        return $author;
-//    }
+    /**
+     * @param CreateAuthorModel $createAuthorModel
+     * @return Author
+     */
+    public function create(CreateAuthorModel $createAuthorModel): Author
+    {
+        $author = new Author(
+            $createAuthorModel->firstName,
+            $createAuthorModel->lastName,
+            $createAuthorModel->description
+        );
+
+        $this->authorRepository->create($author);
+
+        return $author;
+    }
 
 //    /**
 //     * @param Author $author

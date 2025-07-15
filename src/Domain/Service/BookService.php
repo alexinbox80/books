@@ -3,11 +3,14 @@
 namespace App\Domain\Service;
 
 use App\Domain\Entity\Book;
+use App\Domain\Model\CreateBookModel;
+use App\Infrastructure\Repository\AuthorRepository;
 use App\Infrastructure\Repository\BookRepository;
 
 class BookService
 {
     public function __construct(
+        private readonly AuthorRepository $authorRepository,
         private readonly BookRepository $bookRepository
     )
     {
@@ -79,21 +82,24 @@ class BookService
         return $book;
     }
 
-//    /**
-//     * @param CreateBookModel $createBookModel
-//     * @return Book
-//     */
-//    public function create(CreateBookModel $createBookModel): Book
-//    {
-//        $book = new Book(
-//            $createBookModel->title,
-//            $createBookModel->description
-//        );
-//
-//        $this->bookRepository->create($book);
-//
-//        return $book;
-//    }
+    /**
+     * @param CreateBookModel $createBookModel
+     * @return Book
+     */
+    public function create(CreateBookModel $createBookModel): Book
+    {
+        $author = $this->authorRepository->find($createBookModel->authorId);
+
+        $book = new Book(
+            $author,
+            $createBookModel->title,
+            $createBookModel->description
+        );
+
+        $this->bookRepository->create($book);
+
+        return $book;
+    }
 
 //    /**
 //     * @param Book $book
