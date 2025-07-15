@@ -29,9 +29,9 @@ final class EntityInitCommand extends Command
             ->addArgument('count', InputArgument::REQUIRED, 'How many books should be added');
     }
 
-    private function generateData(int $authorId, int $count, $faker): \Generator
+    private function generateData(int $authorId, int $start, int $count, $faker): \Generator
     {
-        for ($i = 1; $i <= $count; $i++) {
+        for ($i = $start; $i <= $count + $start; $i++) {
             yield [
                 'authorId' => $authorId + 1,
                 'title' => $faker->words(rand(2, 5), true),
@@ -56,16 +56,21 @@ final class EntityInitCommand extends Command
 
             $result = $this->authorService->create($authorModel);
 
-            $books = $this->generateData($i, $count, $faker);
+            for ($j = 0; $j < $count; $j += 1000) {
+                dump($j);
+                $books = $this->generateData($i, $j, 1000, $faker);
 
-            foreach ($books as $book) {
-                $bookModel = new CreateBookModel(
-                    $book['authorId'],
-                    $book['title'],
-                    $book['description'],
-                );
-                $this->bookService->create($bookModel);
+                foreach ($books as $book) {
+                    $bookModel = new CreateBookModel(
+                        $book['authorId'],
+                        $book['title'],
+                        $book['description'],
+                    );
+                    $this->bookService->create($bookModel);
+                }
             }
+
+
 
 //            for ($j = 0; $j < $count; $j++) {
 //                $bookModel = new CreateBookModel(

@@ -3,7 +3,9 @@
 namespace App\Domain\Service;
 
 use App\Domain\Entity\Author;
+use App\Domain\Model\AuthorModel;
 use App\Domain\Model\CreateAuthorModel;
+use App\Domain\Model\UpdateAuthorModel;
 use App\Infrastructure\Repository\AuthorRepository;
 
 class AuthorService
@@ -51,11 +53,20 @@ class AuthorService
     }
 
     /**
-     * @return Author[]
+     * @return AuthorModel[]
      */
     public function getAuthorsPaginated(int $page, int $perPage): array
     {
-        return $this->authorRepository->getAuthorsPaginated($page, $perPage);
+        return array_map(
+            static fn (Author $author): AuthorModel => new AuthorModel(
+                $author->getId(),
+                $author->getFirstName(),
+                $author->getLastName(),
+                $author->getDescription(),
+                $author->getCreatedAt(),
+            ),
+            $this->authorRepository->getAuthorsPaginated($page, $perPage)
+        );
     }
 
     /**
@@ -123,23 +134,23 @@ class AuthorService
         return $author;
     }
 
-//    /**
-//     * @param Author $author
-//     * @param UpdateAuthorModel $updateAuthorModel
-//     * @return Author
-//     */
-//    public function update(Author $author, UpdateAuthorModel $updateAuthorModel): Author
-//    {
-//        $author->changeFields(
-//            $updateAuthorModel->firstName,
-//            $createAuthorModel->lastName,
-//            $updateAuthorModel->description,
-//        );
-//
-//        $this->authorRepository->update();
-//
-//        return $author;
-//    }
+    /**
+     * @param Author $author
+     * @param UpdateAuthorModel $updateAuthorModel
+     * @return Author
+     */
+    public function update(Author $author, UpdateAuthorModel $updateAuthorModel): Author
+    {
+        $author->changeFields(
+            $updateAuthorModel->firstName,
+            $updateAuthorModel->lastName,
+            $updateAuthorModel->description,
+        );
+
+        $this->authorRepository->update();
+
+        return $author;
+    }
 
     /**
      * @param int $authorId

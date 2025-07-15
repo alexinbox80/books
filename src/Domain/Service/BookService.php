@@ -10,7 +10,7 @@ use App\Infrastructure\Repository\BookRepository;
 class BookService
 {
     public function __construct(
-        private readonly AuthorRepository $authorRepository,
+        private readonly AuthorService $authorService,
         private readonly BookRepository $bookRepository
     )
     {
@@ -88,7 +88,7 @@ class BookService
      */
     public function create(CreateBookModel $createBookModel): Book
     {
-        $author = $this->authorRepository->find($createBookModel->authorId);
+        $author = $this->authorService->find($createBookModel->authorId);
 
         $book = new Book(
             $author,
