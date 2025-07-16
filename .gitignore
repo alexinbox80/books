@@ -1,4 +1,5 @@
-.idea
+.idea/*
+.editorconfig
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
