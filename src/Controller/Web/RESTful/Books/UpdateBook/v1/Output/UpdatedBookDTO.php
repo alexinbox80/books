@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Domain\Model;
+namespace App\Controller\Web\RESTful\Books\UpdateBook\v1\Output;
 
-use DateTime;
-
-class BookModel
+class UpdatedBookDTO
 {
     public function __construct(
         public readonly int $id,
@@ -13,7 +11,8 @@ class BookModel
         public readonly string $lastName,
         public readonly string $title,
         public readonly ?string $description,
-        public readonly DateTime $createdAt,
+        public readonly string $createdAt,
+        public readonly string $updatedAt,
     ) {
     }
 }

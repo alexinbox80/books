@@ -6,7 +6,6 @@ use App\Domain\Entity\Book;
 use App\Domain\Model\BookModel;
 use App\Domain\Model\CreateBookModel;
 use App\Domain\Model\UpdateBookModel;
-use App\Infrastructure\Repository\AuthorRepository;
 use App\Infrastructure\Repository\BookRepository;
 
 class BookService
@@ -20,9 +19,28 @@ class BookService
 
     /**
      * @param int $bookId
+     * @return ?BookModel
+     */
+    public function find(int $bookId): ?BookModel
+    {
+        $book = $this->bookRepository->find($bookId);
+
+        return !is_null($book) ? new BookModel(
+            $book->getId(),
+            $book->getAuthor()->getId(),
+            $book->getAuthor()->getFirstName(),
+            $book->getAuthor()->getLastName(),
+            $book->getTitle(),
+            $book->getDescription(),
+            $book->getCreatedAt()
+        ) : null;
+    }
+
+    /**
+     * @param int $bookId
      * @return ?Book
      */
-    public function find(int $bookId): ?Book
+    public function findById(int $bookId): ?Book
     {
         return $this->bookRepository->find($bookId);
     }
@@ -53,6 +71,8 @@ class BookService
             static fn (Book $book): BookModel => new BookModel(
                 $book->getId(),
                 $book->getAuthor()->getId(),
+                $book->getAuthor()->getFirstName(),
+                $book->getAuthor()->getLastName(),
                 $book->getTitle(),
                 $book->getDescription(),
                 $book->getCreatedAt(),
