@@ -22,6 +22,21 @@ class BookRepository extends AbstractRepository
     }
 
     /**
+     * @return Book[]
+     */
+    public function getBooksCount(): array
+    {
+        $dql = "SELECT a.id, a.firstName, a.lastName, COUNT(a.id) as count FROM App\Domain\Entity\Book b
+                  INNER JOIN b.author a
+                  GROUP BY a.id
+                  ORDER BY count DESC";
+        $em = $this->entityManager;
+
+        $query = $em->createQuery($dql);
+        return $query->getResult();
+    }
+
+    /**
      * @param int $bookId
      * @return Book|null
      */

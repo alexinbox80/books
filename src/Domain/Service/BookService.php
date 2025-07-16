@@ -3,6 +3,7 @@
 namespace App\Domain\Service;
 
 use App\Domain\Entity\Book;
+use App\Domain\Model\AuthorCountModel;
 use App\Domain\Model\BookModel;
 use App\Domain\Model\CreateBookModel;
 use App\Domain\Model\UpdateBookModel;
@@ -78,6 +79,24 @@ class BookService
                 $book->getCreatedAt(),
             ),
             $this->bookRepository->getBooksPaginated($page, $perPage)
+        );
+    }
+
+    /**
+     * @return AuthorCountModel[]
+     */
+    public function getBooksCount(): array
+    {
+        $result = $this->bookRepository->getBooksCount();
+
+        return array_map(
+            static fn (array $result): AuthorCountModel => new AuthorCountModel(
+                $result['id'],
+                $result['firstName'],
+                $result['lastName'],
+                $result['count']
+            ),
+            $result
         );
     }
 
