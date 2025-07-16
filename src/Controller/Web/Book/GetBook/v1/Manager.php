@@ -23,6 +23,8 @@ class Manager
             static fn (BookModel $bookModel) => new BookDTO(
                 $bookModel->id,
                 $bookModel->authorId,
+                $bookModel->firstName,
+                $bookModel->lastName,
                 $bookModel->title,
                 $bookModel->description,
                 $bookModel->createdAt->format('Y-m-d H:i:s'),
